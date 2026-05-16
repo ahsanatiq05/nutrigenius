@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CalorieScan AI | Dashboard</title>
+    <link rel="stylesheet" href="css.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <header>
+        <div class="logo">
+            <img src="Minimalist Black Apple Logo with Leaf.png" alt="CalorieScan AI Logo">
+            <span>CalorieScan AI</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="#">Analytics</a></li>
+                <li><a href="#">Meals</a></li>
+                <li><a href="#">Settings <span class="badge">1</span></a></li>
+            </ul>
+        </nav>
+        <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=User&background=d1fe17&color=000" alt="User">
+        </div>
+    </header>
+
+    <div class="sidebar-trigger"></div>
+    <div class="sidebar">
+        <div class="sidebar-inner">
+            <ul>
+                <li>
+                    <a href="#scanner"><i class="ph ph-camera"></i> <span>Scanner</span></a>
+                    <p class="tooltip">Analyze nutrients from any image</p>
+                </li>
+                <li>
+                    <a href="#planner"><i class="ph ph-calendar-check"></i> <span>Diet Plan</span></a>
+                    <p class="tooltip">Custom plans based on your goals</p>
+                </li>
+                <li>
+                    <a href="#recipes"><i class="ph ph-cooking-pot"></i> <span>Recipes</span></a>
+                    <p class="tooltip">AI-generated meals from your fridge</p>
+                </li>
+                <li>
+                    <a href="#water"><i class="ph ph-drop"></i> <span>Hydration</span></a>
+                    <p class="tooltip">Track your daily hydration</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-badge">AI-Powered Nutrition</div>
+            <h1>Optimize Your Health.</h1>
+            <p>Upload photos of your meals for instant macroscopic breakdowns and personalized, data-driven diet suggestions.</p>
+        </section>
+
+        <div class="grid-layout">
+            <section id="scanner" class="card fade-in">
+                <div class="card-header">
+                    <h2><i class="ph-fill ph-scan"></i> Food Scanner</h2>
+                </div>
+                <div class="upload-area" id="drop-zone">
+                    <div class="upload-icon-wrapper">
+                        <i class="ph ph-upload-simple"></i>
+                    </div>
+                    <p class="upload-title">Click or drag image to scan</p>
+                    <p class="upload-subtitle">Supports JPG, PNG up to 10MB</p>
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                    <button class="btn" onclick="document.getElementById('file-input').click()">Browse Files</button>
+                </div>
+                <div id="scan-result" class="hidden">
+                    <div class="result-header">
+                        <h3><i class="ph ph-chart-donut"></i> Analysis Result</h3>
+                    </div>
+                    <div id="scan-data" class="scan-content">Loading...</div>
+                </div>
+            </section>
+
+            <section id="planner" class="card fade-in" style="animation-delay: 0.1s;">
+                <div class="card-header">
+                    <h2><i class="ph-fill ph-calendar-blank"></i> Weekly Roadmap</h2>
+                    <button class="btn btn-sm btn-ghost"><i class="ph ph-plus"></i> Add Meal</button>
+                </div>
+                <div class="calendar">
+                    <div class="day"><strong>MON</strong><span>--</span></div>
+                    <div class="day"><strong>TUE</strong><span>--</span></div>
+                    <div class="day active"><strong>WED</strong><span class="dot"></span></div>
+                    <div class="day"><strong>THU</strong><span>--</span></div>
+                    <div class="day"><strong>FRI</strong><span>--</span></div>
+                    <div class="day"><strong>SAT</strong><span>--</span></div>
+                    <div class="day"><strong>SUN</strong><span>--</span></div>
+                </div>
+                <div class="planner-summary">
+                    <div class="stat-box">
+                        <span class="stat-label">Daily Goal</span>
+                        <span class="stat-value">2,400 kcal</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Consumed</span>
+                        <span class="stat-value highlight" id="consumed-calories">1,250 kcal</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="recipes" class="card fade-in" style="animation-delay: 0.2s;">
+                <div class="card-header">
+                    <h2><i class="ph-fill ph-magic-wand"></i> Recipe Generator</h2>
+                </div>
+                <div class="input-wrapper">
+                    <textarea id="recipe-prompt" placeholder="E.g., 'healthy breakfast under 300 calories' or 'quick dinner with chicken'"></textarea>
+                    <button class="btn btn-icon" id="generate-recipe-btn"><i class="ph ph-paper-plane-right"></i> Generate</button>
+                </div>
+                <div id="recipe-result" class="hidden recipe-content"></div>
+            </section>
+
+            <section id="water" class="card fade-in" style="animation-delay: 0.3s;">
+                <div class="card-header">
+                    <h2><i class="ph-fill ph-drop"></i> Hydration Tracker</h2>
+                </div>
+                <div class="water-stats">
+                    <div class="water-text">
+                        <span class="water-current" id="water-text-large">0</span>
+                        <span class="water-total">/ 8 glasses (2L)</span>
+                    </div>
+                </div>
+                <div class="water-progress-container">
+                    <div class="water-progress-track">
+                        <div class="water-progress-fill" id="water-bar" style="width: 0%;">
+                            <div class="glow"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="water-controls">
+                    <button class="btn" id="add-water-btn"><i class="ph ph-plus"></i> Add Glass</button>
+                    <button class="btn btn-outline" id="reset-water-btn"><i class="ph ph-arrows-clockwise"></i> Reset</button>
+                </div>
+                <div class="reminder-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="water-reminders">
+                        <span class="slider"></span>
+                    </label>
+                    <span>Enable 2-hour smart reminders</span>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div class="ai-assistant-wrapper">
+        <div class="chat-log-container hidden" id="chat-log-container">
+            <div class="chat-header">
+                <span><i class="ph-fill ph-sparkle"></i> AI Nutritionist</span>
+                <button id="close-chat-btn"><i class="ph ph-x"></i></button>
+            </div>
+            <div class="chat-log" id="chat-log">
+                <div class="chat-message ai">
+                    <div class="msg-content">Hi! I'm CalorieScan AI. How can I assist your diet today?</div>
+                </div>
+            </div>
+        </div>
+        <div class="ai-assistant">
+            <div class="ai-assistant-inner">
+                <i class="ph-fill ph-sparkle ai-icon"></i>
+                <input type="text" id="ai-input" placeholder="Ask your AI nutritionist...">
+                <button id="ai-send-btn"><i class="ph ph-arrow-up"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 CalorieScan Co. | Intelligence for your body.</p>
+            <div class="socials">
+                <a href="#"><i class="ph ph-facebook-logo"></i></a>
+                <a href="#"><i class="ph ph-instagram-logo"></i></a>
+                <a href="#"><i class="ph ph-twitter-logo"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="toast" class="toast hidden">
+        <i class="ph ph-info"></i>
+        <span id="toast-msg">Notification</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
